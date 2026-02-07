@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 
 type ModalState = "WAITLIST" | null;
 
-// Asset path (your file lives in public/fish/)
+// Asset path
 const HERO2_BG_SRC = "/fish/stockfish-hero2.png";
 
 // --------------------
@@ -24,6 +24,188 @@ const FIELD_BUNDLES = [
   { qty: 10, total: 2490, badge: "" },
   { qty: 1, total: 279, badge: "" },
 ];
+
+// --------------------
+// COPY (SV/EN)
+// --------------------
+const TEXT = {
+  sv: {
+    header: {
+      brand: "Stockfish",
+      tagline: "icelandic stockfish",
+      lang: "EN",
+    },
+    nav: { product: "Produkt", stockfish: "Stockfish", company: "Företaget" },
+
+    hero: {
+      title: "Världens mest proteinrika näringskälla.",
+      strap: "RAW. ORGANIC. ARCTIC.",
+      line1: "84 g protein / 100 g.",
+      line2: "Lufttorkad isländsk torsk.",
+      cta: "Visa produkter",
+    },
+
+    cards: {
+      stockfishTitle: "Stockfish Pack 100 g",
+      stockfishDesc: "Redo att ätas. Vakuumförpackad. 100 g.",
+      stockfishSpecs: [
+        "Vakuumförpackad. 100 g.",
+        "84 g protein / 100 g.",
+        "Ingredienser: torsk + havssalt.",
+        "Hållbar i rumstemperatur.",
+      ],
+
+      fieldTitle: "Field Pouch",
+      fieldDesc: "Field. Världens mest proteinrika måltidspåse.",
+      fieldSpecs: [
+        "84 g protein / 100 g.",
+        "Kalorier: ~500 kcal.",
+        "Prep: tillsätt kokande vatten direkt i påsen.",
+        "Hållbar i rumstemperatur.",
+      ],
+
+      button: "Få batch-notis",
+    },
+
+    sections: {
+      stockfishTitle: "Stockfish",
+      stockfishLines: [
+        "Före proteinpulver fanns stockfish.",
+        "En konserveringsmetod äldre än moderna tillskott.",
+        "Fisk, luft, tid och salt.",
+        "Det vi gör är inte nytt.",
+        "Det är en återkomst.",
+      ],
+
+      companyTitle: "Företaget",
+      companyLines: [
+        "Vi gör mat.",
+        "Inte kemiskt processade pulver.",
+        "Inte sönderplockade proteiner från industriprocesser.",
+        "Kroppen känner igen riktig mat bättre än industriella substitut.",
+        "Mat slår tillskott.",
+        "Enkelhet slår komplexitet.",
+        "Uppdraget är enkelt.",
+        "Återställa riktig mat i en värld av pulver och tillsatser.",
+        "Fångad i Nordatlanten.",
+        "Lufttorkad på Island.",
+        "Fisk. Luft. Tid. Salt.",
+        "Det räcker.",
+      ],
+    },
+
+    modal: {
+      label: "Väntelista",
+      title: "Gå med.",
+      l1: "Få 1 notis när nästa batch öppnar.",
+      scarcity1: "Begränsat utbud.",
+      scarcity2: "Först till kvarn.",
+      emailPlaceholder: "Email",
+      submit: "Få batch-notis",
+      submitting: "Skickar...",
+      confirmedLabel: "Bekräftad",
+      confirmedTitle: "Du är inne.",
+      confirmedText: "Du får 1 notis när nästa batch öppnar.",
+      close: "Stäng",
+      closeX: "Close",
+    },
+
+    footer: "Batches only.",
+    errors: {
+      submit: "Kunde inte skicka just nu. Försök igen.",
+      network: "Nätverksfel. Försök igen om en stund.",
+    },
+  },
+
+  en: {
+    header: {
+      brand: "Stockfish",
+      tagline: "icelandic stockfish",
+      lang: "SV",
+    },
+    nav: { product: "Product", stockfish: "Stockfish", company: "Company" },
+
+    hero: {
+      title: "82% protein.",
+      strap: "RAW. ORGANIC. ARCTIC.",
+      line1: "Fish. Air. Sea salt. Time.",
+      line2: "Air-dried Icelandic cod protein.",
+      subline: "Shelf-stable at room temperature.",
+      cta: "View products",
+    },
+
+    cards: {
+      stockfishTitle: "Stockfish Pack 100 g",
+      stockfishDesc: "Ready to eat. Vacuum sealed. 100 g.",
+      stockfishSpecs: [
+        "Vacuum sealed. 100 g.",
+        "84 g protein / 100 g.",
+        "Ingredients: cod + sea salt.",
+        "Shelf-stable at room temperature.",
+      ],
+
+      fieldTitle: "Field Pouch",
+      fieldDesc: "Field. The most protein-dense meal pouch.",
+      fieldSpecs: [
+        "84 g protein / 100 g.",
+        "Calories: ~500 kcal.",
+        "Prep: add boiling water directly into the pouch.",
+        "Shelf-stable at room temperature.",
+      ],
+
+      button: "Get batch notice",
+    },
+
+    sections: {
+      stockfishTitle: "Stockfish",
+      stockfishLines: [
+        "Before protein powder, there was stockfish.",
+        "A preservation method older than modern supplements.",
+        "Fish, air, time, and salt.",
+        "What we do isn’t new.",
+        "It’s a return.",
+      ],
+
+      companyTitle: "Company",
+      companyLines: [
+        "We make food.",
+        "Not chemically processed powders.",
+        "Not deconstructed proteins from industrial processing.",
+        "The body recognizes real food better than industrial substitutes.",
+        "Food beats supplements.",
+        "Simplicity beats complexity.",
+        "The mission is simple.",
+        "Bring real food back in a world of powders and additives.",
+        "Caught in the North Atlantic.",
+        "Air-dried in Iceland.",
+        "Fish. Air. Time. Salt.",
+        "That’s enough.",
+      ],
+    },
+
+    modal: {
+      label: "Waitlist",
+      title: "Join.",
+      l1: "Get 1 notification when the next batch opens.",
+      scarcity1: "Limited supply.",
+      scarcity2: "First come, first served.",
+      emailPlaceholder: "Email",
+      submit: "Get batch notice",
+      submitting: "Sending...",
+      confirmedLabel: "Confirmed",
+      confirmedTitle: "You're in.",
+      confirmedText: "You'll get 1 notification when the next batch opens.",
+      close: "Close",
+      closeX: "Close",
+    },
+
+    footer: "Batches only.",
+    errors: {
+      submit: "Could not submit right now. Please try again shortly.",
+      network: "Network error. Please try again shortly.",
+    },
+  },
+} as const;
 
 function formatMoney(amount: number) {
   return `${amount.toLocaleString("sv-SE")} ${CURRENCY}`;
@@ -93,19 +275,19 @@ export default function ProductPage() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  // ✅ Waitlist submit UX
+  // Waitlist submit UX
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
 
   const allocationId = useMemo(() => generateAllocationId(), []);
-
   const overlayRef = useRef<HTMLDivElement | null>(null);
 
   const pathname = usePathname();
   const router = useRouter();
   const isEN = pathname.startsWith("/en");
+  const t = isEN ? TEXT.en : TEXT.sv;
 
-  // ✅ Language routing: / (SV) <-> /en (EN)
+  // Correct language routing (NO /product)
   const toggleLanguage = () => {
     router.push(isEN ? "/" : "/en");
   };
@@ -155,11 +337,7 @@ export default function ProductPage() {
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok || !data?.success) {
-        setSubmitError(
-          !isEN
-            ? "Kunde inte skicka just nu. Testa igen om en stund."
-            : "Could not submit right now. Please try again shortly."
-        );
+        setSubmitError(t.errors.submit);
         setIsSubmitting(false);
         return;
       }
@@ -168,11 +346,7 @@ export default function ProductPage() {
       setIsSubmitting(false);
     } catch (err) {
       console.error("[waitlist] network error:", err);
-      setSubmitError(
-        !isEN
-          ? "Nätverksfel. Testa igen om en stund."
-          : "Network error. Please try again shortly."
-      );
+      setSubmitError(t.errors.network);
       setIsSubmitting(false);
     }
   }
@@ -196,6 +370,7 @@ export default function ProductPage() {
           }}
         />
 
+        {/* subtle global dark wash + gradient */}
         <div className="absolute inset-0 bg-black/30" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/45 to-black/95" />
       </div>
@@ -205,9 +380,9 @@ export default function ProductPage() {
         <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <MiniIcelandGlobe size={20} />
-            <span className="font-semibold tracking-tight">Stockfish</span>
+            <span className="font-semibold tracking-tight">{t.header.brand}</span>
             <span className="text-[11px] uppercase tracking-widest text-white/55">
-              icelandic stockfish
+              {t.header.tagline}
             </span>
           </div>
 
@@ -216,19 +391,19 @@ export default function ProductPage() {
               onClick={() => scrollToId("product")}
               className="hover:text-white transition-colors"
             >
-              {isEN ? "Product" : "Produkt"}
+              {t.nav.product}
             </button>
             <button
               onClick={() => scrollToId("stockfish")}
               className="hover:text-white transition-colors"
             >
-              Stockfish
+              {t.nav.stockfish}
             </button>
             <button
               onClick={() => scrollToId("company")}
               className="hover:text-white transition-colors"
             >
-              {isEN ? "Company" : "Företaget"}
+              {t.nav.company}
             </button>
           </nav>
 
@@ -236,10 +411,10 @@ export default function ProductPage() {
             <button
               onClick={toggleLanguage}
               className="text-[11px] uppercase tracking-widest text-white/65 hover:text-white transition"
-              aria-label="Byt språk"
-              title="Byt språk"
+              aria-label="Toggle language"
+              title="Toggle language"
             >
-              {isEN ? "SV" : "EN"}
+              {t.header.lang}
             </button>
           </div>
         </div>
@@ -264,60 +439,28 @@ export default function ProductPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/45 to-black/95" />
 
           <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
-            {!isEN ? (
-              <>
-                <h1 className="mt-6 text-4xl md:text-6xl font-semibold tracking-tight leading-[1.05]">
-                  Världens mest proteinrika näringskälla.
-                </h1>
+            <h1 className="mt-6 text-4xl md:text-6xl font-semibold tracking-tight leading-[1.05]">
+              {t.hero.title}
+            </h1>
 
-                <div className="mt-4 text-[11px] md:text-xs uppercase tracking-[0.35em] text-white/80">
-                  RAW. ORGANIC. ARCTIC.
-                </div>
+            <div className="mt-4 text-[11px] md:text-xs uppercase tracking-[0.35em] text-white/80">
+              {t.hero.strap}
+            </div>
 
-                <div className="mt-6 space-y-2 text-base md:text-lg font-medium tracking-wide text-white/95">
-                  <div>84 g protein / 100 g.</div>
-                  <div className="text-white/90 font-normal">
-                    Lufttorkad isländsk torsk.
-                  </div>
-                </div>
+            <div className="mt-6 space-y-2 text-base md:text-lg font-medium tracking-wide text-white/95">
+              <div>{t.hero.line1}</div>
+              {"subline" in t.hero && t.hero.subline ? <div>{t.hero.subline}</div> : null}
+              <div className="text-white/90 font-normal">{t.hero.line2}</div>
+            </div>
 
-                <div className="mt-8 flex flex-col items-center gap-3">
-                  <button
-                    onClick={() => scrollToId("product")}
-                    className="rounded-full border border-white/25 bg-white/5 px-6 py-3 text-[11px] uppercase tracking-widest hover:bg-white/10 hover:border-white/35 transition"
-                  >
-                    Visa produkter
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <h1 className="mt-6 text-5xl md:text-7xl font-semibold tracking-tight">
-                  82% protein.
-                </h1>
-
-                <div className="mt-3 text-[11px] md:text-xs uppercase tracking-[0.35em] text-white/80">
-                  RAW. ORGANIC. ARCTIC.
-                </div>
-
-                <div className="mt-6 space-y-2 text-base md:text-lg font-medium tracking-wide text-white/95">
-                  <div>Fish. Air. Sea Salt. Time.</div>
-                  <div>Shelf-stableFstable at room temperature.</div>
-                  <div className="text-white/90 font-normal">
-                    Air-dried Icelandic cod protein.
-                  </div>
-                </div>
-
-                <div className="mt-8 flex flex-col items-center gap-3">
-                  <button
-                    onClick={() => scrollToId("product")}
-                    className="rounded-full border border-white/25 bg-white/5 px-6 py-3 text-[11px] uppercase tracking-widest hover:bg-white/10 hover:border-white/35 transition"
-                  >
-                    View products
-                  </button>
-                </div>
-              </>
-            )}
+            <div className="mt-8 flex flex-col items-center gap-3">
+              <button
+                onClick={() => scrollToId("product")}
+                className="rounded-full border border-white/25 bg-white/5 px-6 py-3 text-[11px] uppercase tracking-widest hover:bg-white/10 hover:border-white/35 transition"
+              >
+                {t.hero.cta}
+              </button>
+            </div>
           </div>
         </section>
 
@@ -351,22 +494,31 @@ export default function ProductPage() {
                     src="/fish/tactical-snack.png"
                     alt="Stockfish Pack 100g pouch"
                     fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
                     className="object-contain p-6 transition-transform duration-300 ease-out group-hover:scale-[1.04]"
                   />
                 </div>
 
                 <div className="p-6">
                   <div className="text-[10px] uppercase tracking-widest text-white/75">
-                    Stockfish Pack 100 g
+                    {t.cards.stockfishTitle}
                   </div>
 
                   <div className="mt-2 text-sm font-medium text-white/90 leading-relaxed">
-                    Redo att ätas. Vakuumförpackad. 100 g.
+                    {t.cards.stockfishDesc}
                   </div>
 
                   <div className="mt-5 space-y-2">
                     {STOCKFISH_BUNDLES.map((b) => {
                       const isRecommended = (b.badge || "").length > 0;
+                      const badge = isEN
+                        ? b.badge
+                          ? b.badge === "REKOMMENDERAD"
+                            ? "RECOMMENDED"
+                            : b.badge
+                          : ""
+                        : b.badge;
+
                       return (
                         <div
                           key={b.qty}
@@ -381,9 +533,9 @@ export default function ProductPage() {
                               <div className="text-[11px] uppercase tracking-widest text-white/85">
                                 {b.qty} PACK
                               </div>
-                              {b.badge ? (
+                              {badge ? (
                                 <div className="text-[10px] uppercase tracking-[0.25em] text-white/55">
-                                  {b.badge}
+                                  {badge}
                                 </div>
                               ) : null}
                             </div>
@@ -406,14 +558,13 @@ export default function ProductPage() {
                       onClick={openWaitlist}
                       className="w-full rounded-full border border-white/25 bg-black/40 px-4 py-2 text-[11px] uppercase tracking-widest hover:bg-black/50 hover:border-white/35 transition"
                     >
-                      Få batch-notis
+                      {t.cards.button}
                     </button>
 
                     <div className="mt-5 font-mono text-[12px] leading-6 font-medium text-white/90">
-                      <div>Vakuumförpackad. 100 g.</div>
-                      <div>84 g protein / 100 g.</div>
-                      <div>Ingredienser: torsk + havssalt.</div>
-                      <div>Hållbar i rumstemperatur.</div>
+                      {t.cards.stockfishSpecs.map((line) => (
+                        <div key={line}>{line}</div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -426,22 +577,31 @@ export default function ProductPage() {
                     src="/fish/field.png"
                     alt="Stockfish Field pouch"
                     fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
                     className="object-contain p-6 transition-transform duration-300 ease-out group-hover:scale-[1.04]"
                   />
                 </div>
 
                 <div className="p-6">
                   <div className="text-[10px] uppercase tracking-widest text-white/75">
-                    Field Pouch
+                    {t.cards.fieldTitle}
                   </div>
 
                   <div className="mt-2 text-sm font-medium text-white/90 leading-relaxed">
-                    Field. Världens mest proteinrika måltidspåse.
+                    {t.cards.fieldDesc}
                   </div>
 
                   <div className="mt-5 space-y-2">
                     {FIELD_BUNDLES.map((b) => {
                       const isRecommended = (b.badge || "").length > 0;
+                      const badge = isEN
+                        ? b.badge
+                          ? b.badge === "EXPEDITION SET"
+                            ? "EXPEDITION SET"
+                            : b.badge
+                          : ""
+                        : b.badge;
+
                       return (
                         <div
                           key={b.qty}
@@ -456,9 +616,9 @@ export default function ProductPage() {
                               <div className="text-[11px] uppercase tracking-widest text-white/85">
                                 {b.qty} PACK
                               </div>
-                              {b.badge ? (
+                              {badge ? (
                                 <div className="text-[10px] uppercase tracking-[0.25em] text-white/55">
-                                  {b.badge}
+                                  {badge}
                                 </div>
                               ) : null}
                             </div>
@@ -481,21 +641,20 @@ export default function ProductPage() {
                       onClick={openWaitlist}
                       className="w-full rounded-full border border-white/25 bg-black/40 px-4 py-2 text-[11px] uppercase tracking-widest hover:bg-black/50 hover:border-white/35 transition"
                     >
-                      Få batch-notis
+                      {t.cards.button}
                     </button>
 
                     <div className="mt-5 font-mono text-[12px] leading-6 font-medium text-white/90">
-                      <div>84 g protein / 100 g.</div>
-                      <div>Kalorier: ~500 kcal.</div>
-                      <div>Prep: tillsätt kokande vatten direkt i påsen.</div>
-                      <div>Hållbar i rumstemperatur.</div>
+                      {t.cards.fieldSpecs.map((line) => (
+                        <div key={line}>{line}</div>
+                      ))}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* ✅ No inline waitlist box here */}
+            {/* No inline waitlist box */}
           </div>
         </section>
 
@@ -508,17 +667,15 @@ export default function ProductPage() {
                 className="rounded-2xl border border-white/10 bg-black/40 ring-1 ring-white/5 p-6 backdrop-blur-[2px]"
               >
                 <h2 className="text-sm uppercase tracking-widest text-white/85">
-                  Stockfish
+                  {t.sections.stockfishTitle}
                 </h2>
 
                 <div className="mt-4 space-y-2 text-sm md:text-base font-medium text-white/88 leading-relaxed">
-                  <div className="text-white/95">
-                    Före proteinpulver fanns stockfish.
-                  </div>
-                  <div>En konserveringsmetod äldre än moderna tillskott.</div>
-                  <div>Fisk, luft, tid och salt.</div>
-                  <div>Det vi gör är inte nytt.</div>
-                  <div>Det är en återkomst.</div>
+                  {t.sections.stockfishLines.map((line, idx) => (
+                    <div key={idx} className={idx === 0 ? "text-white/95" : ""}>
+                      {line}
+                    </div>
+                  ))}
                 </div>
               </section>
 
@@ -527,33 +684,22 @@ export default function ProductPage() {
                 className="rounded-2xl border border-white/10 bg-black/40 ring-1 ring-white/5 p-6 backdrop-blur-[2px]"
               >
                 <h2 className="text-sm uppercase tracking-widest text-white/85">
-                  Företaget
+                  {t.sections.companyTitle}
                 </h2>
 
                 <div className="mt-4 space-y-2 text-sm md:text-base font-medium text-white/88 leading-relaxed">
-                  <div>Vi gör mat.</div>
-
-                  <div className="pt-2">Inte kemiskt processade pulver.</div>
-                  <div>Inte sönderplockade proteiner från industriprocesser.</div>
-
-                  <div className="pt-2">
-                    Kroppen känner igen riktig mat bättre än industriella
-                    substitut.
-                  </div>
-                  <div>Mat slår tillskott.</div>
-                  <div>Enkelhet slår komplexitet.</div>
-
-                  <div className="pt-2">Uppdraget är enkelt.</div>
-                  <div>
-                    Återställa riktig mat i en värld av pulver och tillsatser.
-                  </div>
-
-                  <div className="pt-2">Fångad i Nordatlanten.</div>
-                  <div>Lufttorkad på Island.</div>
-
-                  <div className="pt-2">Fisk. Luft. Tid. Salt.</div>
-
-                  <div className="pt-2 text-white/95">Det räcker.</div>
+                  {t.sections.companyLines.map((line, idx) => (
+                    <div
+                      key={idx}
+                      className={
+                        idx === 0 || idx === t.sections.companyLines.length - 1
+                          ? "text-white/95"
+                          : ""
+                      }
+                    >
+                      {line}
+                    </div>
+                  ))}
                 </div>
               </section>
             </div>
@@ -562,7 +708,7 @@ export default function ProductPage() {
 
         <footer className="border-t border-white/10 py-10">
           <div className="max-w-7xl mx-auto px-6 text-[10px] uppercase tracking-[0.35em] text-white/35">
-            Batches only.
+            {t.footer}
           </div>
         </footer>
       </main>
@@ -580,8 +726,8 @@ export default function ProductPage() {
             <button
               onClick={closeModal}
               className="absolute top-3 right-3 h-9 w-9 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition flex items-center justify-center text-white/70 hover:text-white"
-              aria-label="Close"
-              title="Close"
+              aria-label={t.modal.closeX}
+              title={t.modal.closeX}
             >
               ×
             </button>
@@ -589,18 +735,16 @@ export default function ProductPage() {
             {!submitted ? (
               <>
                 <div className="text-[10px] uppercase tracking-widest text-white/60">
-                  Väntelista
+                  {t.modal.label}
                 </div>
                 <h3 className="mt-2 text-2xl font-semibold tracking-tight">
-                  Gå med.
+                  {t.modal.title}
                 </h3>
 
                 <p className="mt-2 text-sm text-white/75 leading-relaxed">
-                  <span className="block">
-                    Få 1 notis när nästa batch öppnar.
-                  </span>
-                  <span className="block mt-2">Begränsat utbud.</span>
-                  <span className="block mt-2">Först till kvarn.</span>
+                  <span className="block">{t.modal.l1}</span>
+                  <span className="block mt-2">{t.modal.scarcity1}</span>
+                  <span className="block mt-2">{t.modal.scarcity2}</span>
                 </p>
 
                 {submitError ? (
@@ -622,7 +766,7 @@ export default function ProductPage() {
                   <input
                     type="email"
                     required
-                    placeholder="Email"
+                    placeholder={t.modal.emailPlaceholder}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm outline-none focus:border-white/30"
@@ -633,17 +777,17 @@ export default function ProductPage() {
                     className="w-full rounded-xl border border-white/25 bg-white/5 px-4 py-3 text-[11px] uppercase tracking-widest hover:bg-white/10 hover:border-white/35 transition disabled:opacity-60 disabled:cursor-not-allowed"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? "Skickar..." : "Få batch-notis"}
+                    {isSubmitting ? t.modal.submitting : t.modal.submit}
                   </button>
                 </form>
               </>
             ) : (
               <>
                 <div className="text-[10px] uppercase tracking-widest text-white/60">
-                  Bekräftad
+                  {t.modal.confirmedLabel}
                 </div>
                 <h3 className="mt-2 text-2xl font-semibold tracking-tight">
-                  Du är inne.
+                  {t.modal.confirmedTitle}
                 </h3>
 
                 <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-4 font-mono text-[11px] text-white/85">
@@ -652,7 +796,7 @@ export default function ProductPage() {
                 </div>
 
                 <p className="mt-4 text-sm text-white/75 leading-relaxed">
-                  Du får 1 notis när nästa batch öppnar.
+                  {t.modal.confirmedText}
                 </p>
 
                 <div className="mt-6">
@@ -666,7 +810,7 @@ export default function ProductPage() {
                     }}
                     className="w-full rounded-xl border border-white/25 bg-white/5 px-4 py-3 text-[11px] uppercase tracking-widest hover:bg-white/10 hover:border-white/35 transition"
                   >
-                    Stäng
+                    {t.modal.close}
                   </button>
                 </div>
               </>
