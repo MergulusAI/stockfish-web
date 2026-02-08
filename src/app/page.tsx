@@ -714,15 +714,7 @@ export default function ProductPage() {
               <div className="border-t border-white/10 pt-10" />
             </div>
 
-            {/* CTA #3: single placement above product cards (CLOSED only) */}
-            {isClosed ? (
-              <div className="mt-8 flex justify-center">
-                <PrimaryBatchCTA
-                  label={t.cards.button}
-                  onClick={() => openWaitlist("Stockfish 100g")}
-                />
-              </div>
-            ) : null}
+           
 
             <div className="mt-10 grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
               {/* Stockfish Pack 100g */}
