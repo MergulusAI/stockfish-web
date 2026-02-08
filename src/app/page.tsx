@@ -153,12 +153,13 @@ const TEXT = {
       cta: "Get batch notice",
     },
 
+    // LOCKED EN-HERO-COPY v1.0
     hero: {
-      title: "82% protein.",
+      title: "The world’s most protein-dense nutrition.",
       strap: "RAW. ORGANIC. ARCTIC.",
-      line1: "Fish. Air. Sea salt. Time.",
-      line2: "Air-dried Icelandic cod protein.",
+      line1: "Air-dried Icelandic cod.",
       subline: "Shelf-stable at room temperature.",
+      line2: "≈84 g protein per 100 g.",
       cta: "View products",
       closedLine: "Batch closed. Next opening announced by email.",
     },
@@ -713,8 +714,6 @@ export default function ProductPage() {
             <div className="max-w-3xl mx-auto">
               <div className="border-t border-white/10 pt-10" />
             </div>
-
-           
 
             <div className="mt-10 grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
               {/* Stockfish Pack 100g */}
