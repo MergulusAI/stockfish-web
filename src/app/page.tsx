@@ -42,7 +42,7 @@ const TEXT = {
       tagline: "icelandic stockfish",
       lang: "EN",
     },
-    nav: { product: "Produkt", stockfish: "Stockfish", company: "Företaget" },
+    nav: { product: "Produkt", why: "Varför Stockfish?" },
 
     banner: {
       title: "BATCH STÄNGD",
@@ -82,17 +82,12 @@ const TEXT = {
     },
 
     sections: {
-      stockfishTitle: "Stockfish",
-      stockfishLines: [
+      whyTitle: "Varför Stockfish?",
+      whyLines: [
         "Före proteinpulver fanns stockfish.",
         "En konserveringsmetod äldre än moderna tillskott.",
         "Fisk, luft, tid och salt.",
-        "Det vi gör är inte nytt.",
-        "Det är en återkomst.",
-      ],
-
-      companyTitle: "Företaget",
-      companyLines: [
+        "",
         "Vi gör mat.",
         "",
         "Inte kemiskt processade pulver.",
@@ -113,6 +108,7 @@ const TEXT = {
         "",
         "Det räcker.",
       ],
+      punchline: "Framtidens protein är 1 000 år gammalt.",
     },
 
     modal: {
@@ -145,7 +141,7 @@ const TEXT = {
       tagline: "icelandic stockfish",
       lang: "SV",
     },
-    nav: { product: "Product", stockfish: "Stockfish", company: "Company" },
+    nav: { product: "Product", why: "Why Stockfish?" },
 
     banner: {
       title: "BATCH CLOSED",
@@ -186,17 +182,12 @@ const TEXT = {
     },
 
     sections: {
-      stockfishTitle: "Stockfish",
-      stockfishLines: [
+      whyTitle: "Why Stockfish?",
+      whyLines: [
         "Before protein powder, there was stockfish.",
         "A preservation method older than modern supplements.",
         "Fish, air, time, and salt.",
-        "What we do isn’t new.",
-        "It’s a return.",
-      ],
-
-      companyTitle: "Company",
-      companyLines: [
+        "",
         "We make food.",
         "",
         "Not chemically processed powders.",
@@ -217,6 +208,7 @@ const TEXT = {
         "",
         "That’s enough.",
       ],
+      punchline: "The future of protein is 1,000 years old.",
     },
 
     modal: {
@@ -580,16 +572,10 @@ export default function ProductPage() {
               {t.nav.product}
             </button>
             <button
-              onClick={() => scrollToId("stockfish")}
+              onClick={() => scrollToId("why")}
               className="hover:text-white transition-colors"
             >
-              {t.nav.stockfish}
-            </button>
-            <button
-              onClick={() => scrollToId("company")}
-              className="hover:text-white transition-colors"
-            >
-              {t.nav.company}
+              {t.nav.why}
             </button>
           </nav>
 
@@ -671,7 +657,9 @@ export default function ProductPage() {
             <div className="mt-8 flex flex-col items-center gap-3">
               {/* CTA #2: HERO primary */}
               <button
-                onClick={() => (isClosed ? openWaitlist("Stockfish 100g") : scrollToId("product"))}
+                onClick={() =>
+                  isClosed ? openWaitlist("Stockfish 100g") : scrollToId("product")
+                }
                 className={
                   isClosed
                     ? "rounded-full border border-white/25 bg-white px-7 py-3 text-[11px] uppercase tracking-widest text-black hover:bg-white/90 transition"
@@ -920,44 +908,28 @@ export default function ProductPage() {
           </div>
         </section>
 
-        {/* FLOW SECTIONS */}
-        <section className="pb-20">
+        {/* WHY STOCKFISH (merged) */}
+        <section id="why" className="pb-24">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="max-w-5xl mx-auto mt-10 space-y-6">
-              <section
-                id="stockfish"
-                className="rounded-2xl border border-white/10 bg-black/40 ring-1 ring-white/5 p-6 backdrop-blur-[2px]"
-              >
+            <div className="max-w-3xl mx-auto">
+              <div className="border-t border-white/10 pt-10" />
+            </div>
+
+            <div className="max-w-5xl mx-auto mt-10">
+              <section className="rounded-2xl border border-white/10 bg-black/40 ring-1 ring-white/5 p-6 md:p-10 backdrop-blur-[2px]">
                 <h2 className="text-sm uppercase tracking-widest text-white/85">
-                  {t.sections.stockfishTitle}
+                  {t.sections.whyTitle}
                 </h2>
 
-                <div className="mt-4 space-y-2 text-sm md:text-base font-medium text-white/88 leading-relaxed">
-                  {t.sections.stockfishLines.map((line, idx) => (
-                    <div key={idx} className={idx === 0 ? "text-white/95" : ""}>
-                      {line}
-                    </div>
-                  ))}
-                </div>
-              </section>
-
-              <section
-                id="company"
-                className="rounded-2xl border border-white/10 bg-black/40 ring-1 ring-white/5 p-6 backdrop-blur-[2px]"
-              >
-                <h2 className="text-sm uppercase tracking-widest text-white/85">
-                  {t.sections.companyTitle}
-                </h2>
-
-                <div className="mt-4 space-y-2 text-sm md:text-base font-medium text-white/88 leading-relaxed">
-                  {t.sections.companyLines.map((line, idx) =>
+                <div className="mt-6 space-y-2 text-sm md:text-base font-medium text-white/88 leading-relaxed">
+                  {t.sections.whyLines.map((line, idx) =>
                     line === "" ? (
-                      <div key={idx} className="h-2" />
+                      <div key={idx} className="h-3" />
                     ) : (
                       <div
                         key={idx}
                         className={
-                          idx === 0 || idx === t.sections.companyLines.length - 1
+                          idx === 0 || line === "Det räcker." || line === "That’s enough."
                             ? "text-white/95"
                             : ""
                         }
@@ -967,6 +939,22 @@ export default function ProductPage() {
                     )
                   )}
                 </div>
+
+                {/* punchline = small, discreet afterword */}
+                <div className="mt-8 text-[11px] uppercase tracking-[0.35em] text-white/40">
+                  {t.sections.punchline}
+                </div>
+
+                {/* CTA (subtle, single) */}
+                {isClosed ? (
+                  <div className="mt-10 flex justify-center">
+                    <PrimaryBatchCTA
+                      label={t.cards.button}
+                      onClick={() => openWaitlist("Stockfish 100g")}
+                      className="bg-white/95 hover:bg-white"
+                    />
+                  </div>
+                ) : null}
               </section>
             </div>
           </div>
