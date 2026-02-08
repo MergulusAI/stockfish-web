@@ -1,3 +1,4 @@
+// src/app/page.tsx
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -5,9 +6,15 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 
 type ModalState = "WAITLIST" | null;
+type WaitlistProduct = "Stockfish 100g" | "Field";
 
-// Asset path
-const HERO2_BG_SRC = "/fish/stockfish-hero2.png";
+// --------------------
+// HERO2 BACKGROUND VIDEOS (public/hero/*)
+// --------------------
+const HERO2_VIDEOS = [
+  "/hero/hero-bg-iceland-geothermal-01.mp4",
+  "/hero/hero-cliffs-01.mp4",
+] as const;
 
 // --------------------
 // PRICES (SV/SEK)
@@ -37,12 +44,19 @@ const TEXT = {
     },
     nav: { product: "Produkt", stockfish: "Stockfish", company: "Företaget" },
 
+    banner: {
+      title: "BATCH STÄNGD",
+      line: "Nästa öppning meddelas via email",
+      cta: "Få batch-notis",
+    },
+
     hero: {
       title: "Världens mest proteinrika näringskälla.",
       strap: "RAW. ORGANIC. ARCTIC.",
       line1: "84 g protein / 100 g.",
       line2: "Lufttorkad isländsk torsk.",
       cta: "Visa produkter",
+      closedLine: "Batch stängd. Nästa öppning meddelas via email.",
     },
 
     cards: {
@@ -80,16 +94,23 @@ const TEXT = {
       companyTitle: "Företaget",
       companyLines: [
         "Vi gör mat.",
+        "",
         "Inte kemiskt processade pulver.",
-        "Inte sönderplockade proteiner från industriprocesser.",
-        "Kroppen känner igen riktig mat bättre än industriella substitut.",
+        "Inte sönderplockade proteiner.",
+        "Inte produkter som behöver smakämnen eller stabiliseringsmedel.",
+        "",
+        "Riktig mat fungerar bättre än industriella substitut.",
         "Mat slår tillskott.",
         "Enkelhet slår komplexitet.",
-        "Uppdraget är enkelt.",
+        "",
+        "Uppdraget:",
         "Återställa riktig mat i en värld av pulver och tillsatser.",
+        "",
         "Fångad i Nordatlanten.",
         "Lufttorkad på Island.",
+        "",
         "Fisk. Luft. Tid. Salt.",
+        "",
         "Det räcker.",
       ],
     },
@@ -108,6 +129,7 @@ const TEXT = {
       confirmedText: "Du får 1 notis när nästa batch öppnar.",
       close: "Stäng",
       closeX: "Close",
+      productLabel: "BATCH-NOTIS FÖR",
     },
 
     footer: "Batches only.",
@@ -125,6 +147,12 @@ const TEXT = {
     },
     nav: { product: "Product", stockfish: "Stockfish", company: "Company" },
 
+    banner: {
+      title: "BATCH CLOSED",
+      line: "Next opening announced by email",
+      cta: "Get batch notice",
+    },
+
     hero: {
       title: "82% protein.",
       strap: "RAW. ORGANIC. ARCTIC.",
@@ -132,6 +160,7 @@ const TEXT = {
       line2: "Air-dried Icelandic cod protein.",
       subline: "Shelf-stable at room temperature.",
       cta: "View products",
+      closedLine: "Batch closed. Next opening announced by email.",
     },
 
     cards: {
@@ -169,16 +198,23 @@ const TEXT = {
       companyTitle: "Company",
       companyLines: [
         "We make food.",
+        "",
         "Not chemically processed powders.",
-        "Not deconstructed proteins from industrial processing.",
-        "The body recognizes real food better than industrial substitutes.",
+        "Not deconstructed proteins.",
+        "Not products that need flavors or stabilizers.",
+        "",
+        "Real food works better than industrial substitutes.",
         "Food beats supplements.",
         "Simplicity beats complexity.",
-        "The mission is simple.",
+        "",
+        "The mission is simple:",
         "Bring real food back in a world of powders and additives.",
+        "",
         "Caught in the North Atlantic.",
         "Air-dried in Iceland.",
+        "",
         "Fish. Air. Time. Salt.",
+        "",
         "That’s enough.",
       ],
     },
@@ -197,6 +233,7 @@ const TEXT = {
       confirmedText: "You'll get 1 notification when the next batch opens.",
       close: "Close",
       closeX: "Close",
+      productLabel: "BATCH NOTICE FOR",
     },
 
     footer: "Batches only.",
@@ -270,12 +307,152 @@ function MiniIcelandGlobe({ size = 20 }: { size?: number }) {
   );
 }
 
+function PrimaryBatchCTA({
+  label,
+  onClick,
+  className = "",
+}: {
+  label: string;
+  onClick: () => void;
+  className?: string;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={[
+        "rounded-full px-6 py-3 text-[11px] uppercase tracking-widest transition",
+        "border border-white/25",
+        "bg-white text-black hover:bg-white/90",
+        className,
+      ].join(" ")}
+    >
+      {label}
+    </button>
+  );
+}
+
+function Hero2Background({
+  visible,
+  intervalMs = 12000,
+}: {
+  visible: boolean;
+  intervalMs?: number;
+}) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const timers = useRef<number | null>(null);
+  const v0 = useRef<HTMLVideoElement | null>(null);
+  const v1 = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    if (!visible) {
+      if (timers.current) window.clearInterval(timers.current);
+      timers.current = null;
+      return;
+    }
+
+    const playSafe = async (v?: HTMLVideoElement | null) => {
+      if (!v) return;
+      try {
+        await v.play();
+      } catch {}
+    };
+    playSafe(v0.current);
+    playSafe(v1.current);
+
+    timers.current = window.setInterval(() => {
+      setActiveIndex((i) => (i === 0 ? 1 : 0));
+    }, intervalMs);
+
+    return () => {
+      if (timers.current) window.clearInterval(timers.current);
+      timers.current = null;
+    };
+  }, [visible, intervalMs]);
+
+  useEffect(() => {
+    const pauseSafe = (v?: HTMLVideoElement | null) => {
+      if (!v) return;
+      try {
+        v.pause();
+      } catch {}
+    };
+    if (!visible) {
+      pauseSafe(v0.current);
+      pauseSafe(v1.current);
+    }
+  }, [visible]);
+
+  return (
+    <div
+      aria-hidden="true"
+      id="bg-stockfish-hero2"
+      className={[
+        "pointer-events-none fixed inset-0 z-0 transition-opacity duration-700",
+        visible ? "opacity-100" : "opacity-0",
+      ].join(" ")}
+    >
+      <div className="absolute inset-0">
+        <video
+          ref={v0}
+          muted
+          playsInline
+          loop
+          preload="auto"
+          className={[
+            "absolute inset-0 h-full w-full object-cover transition-opacity duration-1000",
+            activeIndex === 0 ? "opacity-100" : "opacity-0",
+          ].join(" ")}
+          style={{
+            filter: "brightness(0.9) contrast(1.05) saturate(0.95)",
+          }}
+        >
+          <source src={HERO2_VIDEOS[0]} type="video/mp4" />
+        </video>
+
+        <video
+          ref={v1}
+          muted
+          playsInline
+          loop
+          preload="auto"
+          className={[
+            "absolute inset-0 h-full w-full object-cover transition-opacity duration-1000",
+            activeIndex === 1 ? "opacity-100" : "opacity-0",
+          ].join(" ")}
+          style={{
+            filter: "brightness(0.9) contrast(1.05) saturate(0.95)",
+          }}
+        >
+          <source src={HERO2_VIDEOS[1]} type="video/mp4" />
+        </video>
+      </div>
+
+      <div className="absolute inset-0 bg-black/18" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/20 to-black/45" />
+
+      <div
+        className="absolute inset-0 opacity-[0.07]"
+        style={{
+          backgroundImage:
+            "radial-gradient(rgba(255,255,255,0.14) 1px, transparent 1px)",
+          backgroundSize: "26px 26px",
+          backgroundPosition: "0 0",
+        }}
+      />
+    </div>
+  );
+}
+
 export default function ProductPage() {
   const [activeModal, setActiveModal] = useState<ModalState>(null);
+
+  // IMPORTANT: product selection for waitlist (never "unknown")
+  const [selectedProduct, setSelectedProduct] =
+    useState<WaitlistProduct>("Stockfish 100g");
+
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  // Waitlist submit UX
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
 
@@ -287,23 +464,27 @@ export default function ProductPage() {
   const isEN = pathname.startsWith("/en");
   const t = isEN ? TEXT.en : TEXT.sv;
 
-  // Correct language routing (NO /product)
+  // --------------------
+  // BATCH STATE (DEFAULT = CLOSED)
+  // --------------------
+  type BatchState = "CLOSED" | "OPEN" | "SOLD_OUT";
+  const [batchState] = useState<BatchState>("CLOSED");
+
+  const isOpen = batchState === "OPEN";
+  const isClosed = batchState !== "OPEN";
+
   const toggleLanguage = () => {
     router.push(isEN ? "/" : "/en");
   };
 
-  useEffect(() => {
-    const img = new window.Image();
-    img.onerror = () => {
-      console.error("[bg] FAILED to load:", HERO2_BG_SRC);
-    };
-    img.src = HERO2_BG_SRC;
-  }, []);
-
-  const openWaitlist = () => {
+  const openWaitlist = (product?: WaitlistProduct) => {
     setSubmitted(false);
     setSubmitError("");
     setIsSubmitting(false);
+
+    // Default safely (never unknown)
+    setSelectedProduct(product ?? "Stockfish 100g");
+
     setActiveModal("WAITLIST");
   };
 
@@ -331,12 +512,16 @@ export default function ProductPage() {
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: formEmail }),
+        // Always include product
+        body: JSON.stringify({ email: formEmail, product: selectedProduct }),
       });
 
       const data = await res.json().catch(() => ({}));
 
-      if (!res.ok || !data?.success) {
+      // Accept both { ok: true } and { success: true } (depending on your API implementation)
+      const isSuccess = Boolean(data?.ok || data?.success);
+
+      if (!res.ok || !isSuccess) {
         setSubmitError(t.errors.submit);
         setIsSubmitting(false);
         return;
@@ -351,29 +536,30 @@ export default function ProductPage() {
     }
   }
 
+  // Hero2 visibility toggle when scrolling past Hero1
+  const [hero2Visible, setHero2Visible] = useState(false);
+  useEffect(() => {
+    const hero = document.getElementById("hero");
+    if (!hero) return;
+
+    const onScroll = () => {
+      const rect = hero.getBoundingClientRect();
+      const trigger = Math.max(120, window.innerHeight * 0.25);
+      setHero2Visible(rect.bottom <= trigger);
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
   return (
     <div className="min-h-screen text-[#F9FAFB] font-sans selection:bg-white selection:text-black bg-black">
-      {/* GLOBAL BACKGROUND LAYER (Hero2) */}
-      <div
-        aria-hidden="true"
-        id="bg-stockfish-hero2"
-        className="pointer-events-none fixed inset-0 z-0 opacity-0 transition-opacity duration-700"
-      >
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `url('${HERO2_BG_SRC}')`,
-            backgroundSize: "cover",
-            backgroundPosition: "center top",
-            backgroundRepeat: "no-repeat",
-            filter: "brightness(1.02) contrast(1.02) saturate(0.98)",
-          }}
-        />
-
-        {/* subtle global dark wash + gradient */}
-        <div className="absolute inset-0 bg-black/30" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/45 to-black/95" />
-      </div>
+      <Hero2Background visible={hero2Visible} />
 
       {/* HEADER */}
       <header className="fixed top-0 w-full z-50 border-b border-white/10 bg-black/40 backdrop-blur-md">
@@ -420,6 +606,28 @@ export default function ProductPage() {
         </div>
       </header>
 
+      {/* CLOSED BANNER (CTA #1) */}
+      {isClosed ? (
+        <div className="fixed top-14 left-0 right-0 z-40">
+          <div className="border-b border-white/10 bg-black/70 backdrop-blur-md">
+            <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
+              <div className="min-w-0">
+                <div className="text-[10px] uppercase tracking-widest text-white/80">
+                  {t.banner.title}
+                </div>
+                <div className="text-xs text-white/60 truncate">{t.banner.line}</div>
+              </div>
+              <button
+                onClick={() => openWaitlist("Stockfish 100g")}
+                className="shrink-0 rounded-full border border-white/25 bg-white text-black px-4 py-2 text-[10px] uppercase tracking-widest hover:bg-white/90 transition"
+              >
+                {t.banner.cta}
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
       <main className="relative z-10 pt-14">
         {/* HERO */}
         <section
@@ -449,22 +657,40 @@ export default function ProductPage() {
 
             <div className="mt-6 space-y-2 text-base md:text-lg font-medium tracking-wide text-white/95">
               <div>{t.hero.line1}</div>
-              {"subline" in t.hero && t.hero.subline ? <div>{t.hero.subline}</div> : null}
+              {"subline" in t.hero && (t.hero as any).subline ? (
+                <div>{(t.hero as any).subline}</div>
+              ) : null}
               <div className="text-white/90 font-normal">{t.hero.line2}</div>
+              {isClosed ? (
+                <div className="pt-2 text-sm md:text-base text-white/65 font-normal">
+                  {t.hero.closedLine}
+                </div>
+              ) : null}
             </div>
 
             <div className="mt-8 flex flex-col items-center gap-3">
+              {/* CTA #2: HERO primary */}
               <button
-                onClick={() => scrollToId("product")}
-                className="rounded-full border border-white/25 bg-white/5 px-6 py-3 text-[11px] uppercase tracking-widest hover:bg-white/10 hover:border-white/35 transition"
+                onClick={() => (isClosed ? openWaitlist("Stockfish 100g") : scrollToId("product"))}
+                className={
+                  isClosed
+                    ? "rounded-full border border-white/25 bg-white px-7 py-3 text-[11px] uppercase tracking-widest text-black hover:bg-white/90 transition"
+                    : "rounded-full border border-white/25 bg-white/5 px-6 py-3 text-[11px] uppercase tracking-widest hover:bg-white/10 hover:border-white/35 transition"
+                }
               >
-                {t.hero.cta}
+                {isClosed ? t.cards.button : t.hero.cta}
               </button>
+
+              {isClosed ? (
+                <div className="text-[10px] uppercase tracking-[0.35em] text-white/45">
+                  {t.footer}
+                </div>
+              ) : null}
             </div>
           </div>
         </section>
 
-        {/* BRIDGE A2 */}
+        {/* BRIDGE */}
         <section aria-hidden="true" className="relative h-28 md:h-36">
           <div className="absolute inset-0 bg-gradient-to-b from-black/95 via-black/70 to-black/20" />
           <div
@@ -485,6 +711,16 @@ export default function ProductPage() {
             <div className="max-w-3xl mx-auto">
               <div className="border-t border-white/10 pt-10" />
             </div>
+
+            {/* CTA #3: single placement above product cards (CLOSED only) */}
+            {isClosed ? (
+              <div className="mt-8 flex justify-center">
+                <PrimaryBatchCTA
+                  label={t.cards.button}
+                  onClick={() => openWaitlist("Stockfish 100g")}
+                />
+              </div>
+            ) : null}
 
             <div className="mt-10 grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
               {/* Stockfish Pack 100g */}
@@ -508,58 +744,71 @@ export default function ProductPage() {
                     {t.cards.stockfishDesc}
                   </div>
 
-                  <div className="mt-5 space-y-2">
-                    {STOCKFISH_BUNDLES.map((b) => {
-                      const isRecommended = (b.badge || "").length > 0;
-                      const badge = isEN
-                        ? b.badge
-                          ? b.badge === "REKOMMENDERAD"
-                            ? "RECOMMENDED"
-                            : b.badge
-                          : ""
-                        : b.badge;
+                  {/* Bundles ONLY when OPEN */}
+                  {isOpen ? (
+                    <div className="mt-5 space-y-2">
+                      {STOCKFISH_BUNDLES.map((b) => {
+                        const isRecommended = (b.badge || "").length > 0;
+                        const badge = isEN
+                          ? b.badge
+                            ? b.badge === "REKOMMENDERAD"
+                              ? "RECOMMENDED"
+                              : b.badge
+                            : ""
+                          : b.badge;
 
-                      return (
-                        <div
-                          key={b.qty}
-                          className={`rounded-xl border px-4 py-3 flex items-center justify-between ${
-                            isRecommended
-                              ? "border-white/20 bg-black/45"
-                              : "border-white/10 bg-black/35"
-                          }`}
-                        >
-                          <div>
-                            <div className="flex items-baseline gap-2">
-                              <div className="text-[11px] uppercase tracking-widest text-white/85">
-                                {b.qty} PACK
-                              </div>
-                              {badge ? (
-                                <div className="text-[10px] uppercase tracking-[0.25em] text-white/55">
-                                  {badge}
+                        return (
+                          <div
+                            key={b.qty}
+                            className={`rounded-xl border px-4 py-3 flex items-center justify-between ${
+                              isRecommended
+                                ? "border-white/20 bg-black/45"
+                                : "border-white/10 bg-black/35"
+                            }`}
+                          >
+                            <div>
+                              <div className="flex items-baseline gap-2">
+                                <div className="text-[11px] uppercase tracking-widest text-white/85">
+                                  {b.qty} PACK
                                 </div>
-                              ) : null}
+                                {badge ? (
+                                  <div className="text-[10px] uppercase tracking-[0.25em] text-white/55">
+                                    {badge}
+                                  </div>
+                                ) : null}
+                              </div>
+
+                              <div className="mt-1 font-mono text-[12px] font-medium text-white/85">
+                                {perPack(b.total, b.qty)}
+                              </div>
                             </div>
 
-                            <div className="mt-1 font-mono text-[12px] font-medium text-white/85">
-                              {perPack(b.total, b.qty)}
+                            <div className="font-mono text-[13px] font-semibold text-white">
+                              {formatMoney(b.total)}
                             </div>
                           </div>
-
-                          <div className="font-mono text-[13px] font-semibold text-white">
-                            {formatMoney(b.total)}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
+                        );
+                      })}
+                    </div>
+                  ) : null}
 
                   <div className="mt-5">
-                    <button
-                      onClick={openWaitlist}
-                      className="w-full rounded-full border border-white/25 bg-black/40 px-4 py-2 text-[11px] uppercase tracking-widest hover:bg-black/50 hover:border-white/35 transition"
-                    >
-                      {t.cards.button}
-                    </button>
+                    {/* When CLOSED: product-specific waitlist CTA */}
+                    {isClosed ? (
+                      <button
+                        onClick={() => openWaitlist("Stockfish 100g")}
+                        className="w-full rounded-full border border-white/25 bg-white text-black px-4 py-2 text-[11px] uppercase tracking-widest hover:bg-white/90 transition"
+                      >
+                        {t.cards.button}
+                      </button>
+                    ) : isOpen ? (
+                      <button
+                        onClick={() => scrollToId("product")}
+                        className="w-full rounded-full border border-white/25 bg-black/40 px-4 py-2 text-[11px] uppercase tracking-widest hover:bg-black/50 hover:border-white/35 transition"
+                      >
+                        {t.hero.cta}
+                      </button>
+                    ) : null}
 
                     <div className="mt-5 font-mono text-[12px] leading-6 font-medium text-white/90">
                       {t.cards.stockfishSpecs.map((line) => (
@@ -591,58 +840,71 @@ export default function ProductPage() {
                     {t.cards.fieldDesc}
                   </div>
 
-                  <div className="mt-5 space-y-2">
-                    {FIELD_BUNDLES.map((b) => {
-                      const isRecommended = (b.badge || "").length > 0;
-                      const badge = isEN
-                        ? b.badge
-                          ? b.badge === "EXPEDITION SET"
-                            ? "EXPEDITION SET"
-                            : b.badge
-                          : ""
-                        : b.badge;
+                  {/* Bundles ONLY when OPEN */}
+                  {isOpen ? (
+                    <div className="mt-5 space-y-2">
+                      {FIELD_BUNDLES.map((b) => {
+                        const isRecommended = (b.badge || "").length > 0;
+                        const badge = isEN
+                          ? b.badge
+                            ? b.badge === "EXPEDITION SET"
+                              ? "EXPEDITION SET"
+                              : b.badge
+                            : ""
+                          : b.badge;
 
-                      return (
-                        <div
-                          key={b.qty}
-                          className={`rounded-xl border px-4 py-3 flex items-center justify-between ${
-                            isRecommended
-                              ? "border-white/20 bg-black/45"
-                              : "border-white/10 bg-black/35"
-                          }`}
-                        >
-                          <div>
-                            <div className="flex items-baseline gap-2">
-                              <div className="text-[11px] uppercase tracking-widest text-white/85">
-                                {b.qty} PACK
-                              </div>
-                              {badge ? (
-                                <div className="text-[10px] uppercase tracking-[0.25em] text-white/55">
-                                  {badge}
+                        return (
+                          <div
+                            key={b.qty}
+                            className={`rounded-xl border px-4 py-3 flex items-center justify-between ${
+                              isRecommended
+                                ? "border-white/20 bg-black/45"
+                                : "border-white/10 bg-black/35"
+                            }`}
+                          >
+                            <div>
+                              <div className="flex items-baseline gap-2">
+                                <div className="text-[11px] uppercase tracking-widest text-white/85">
+                                  {b.qty} PACK
                                 </div>
-                              ) : null}
+                                {badge ? (
+                                  <div className="text-[10px] uppercase tracking-[0.25em] text-white/55">
+                                    {badge}
+                                  </div>
+                                ) : null}
+                              </div>
+
+                              <div className="mt-1 font-mono text-[12px] font-medium text-white/85">
+                                {perPack(b.total, b.qty)}
+                              </div>
                             </div>
 
-                            <div className="mt-1 font-mono text-[12px] font-medium text-white/85">
-                              {perPack(b.total, b.qty)}
+                            <div className="font-mono text-[13px] font-semibold text-white">
+                              {formatMoney(b.total)}
                             </div>
                           </div>
-
-                          <div className="font-mono text-[13px] font-semibold text-white">
-                            {formatMoney(b.total)}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
+                        );
+                      })}
+                    </div>
+                  ) : null}
 
                   <div className="mt-5">
-                    <button
-                      onClick={openWaitlist}
-                      className="w-full rounded-full border border-white/25 bg-black/40 px-4 py-2 text-[11px] uppercase tracking-widest hover:bg-black/50 hover:border-white/35 transition"
-                    >
-                      {t.cards.button}
-                    </button>
+                    {/* When CLOSED: product-specific waitlist CTA */}
+                    {isClosed ? (
+                      <button
+                        onClick={() => openWaitlist("Field")}
+                        className="w-full rounded-full border border-white/25 bg-white text-black px-4 py-2 text-[11px] uppercase tracking-widest hover:bg-white/90 transition"
+                      >
+                        {t.cards.button}
+                      </button>
+                    ) : isOpen ? (
+                      <button
+                        onClick={() => scrollToId("product")}
+                        className="w-full rounded-full border border-white/25 bg-black/40 px-4 py-2 text-[11px] uppercase tracking-widest hover:bg-black/50 hover:border-white/35 transition"
+                      >
+                        {t.hero.cta}
+                      </button>
+                    ) : null}
 
                     <div className="mt-5 font-mono text-[12px] leading-6 font-medium text-white/90">
                       {t.cards.fieldSpecs.map((line) => (
@@ -654,7 +916,7 @@ export default function ProductPage() {
               </div>
             </div>
 
-            {/* No inline waitlist box */}
+            {/* Removed extra CTA under cards (CTA hygiene) */}
           </div>
         </section>
 
@@ -688,18 +950,22 @@ export default function ProductPage() {
                 </h2>
 
                 <div className="mt-4 space-y-2 text-sm md:text-base font-medium text-white/88 leading-relaxed">
-                  {t.sections.companyLines.map((line, idx) => (
-                    <div
-                      key={idx}
-                      className={
-                        idx === 0 || idx === t.sections.companyLines.length - 1
-                          ? "text-white/95"
-                          : ""
-                      }
-                    >
-                      {line}
-                    </div>
-                  ))}
+                  {t.sections.companyLines.map((line, idx) =>
+                    line === "" ? (
+                      <div key={idx} className="h-2" />
+                    ) : (
+                      <div
+                        key={idx}
+                        className={
+                          idx === 0 || idx === t.sections.companyLines.length - 1
+                            ? "text-white/95"
+                            : ""
+                        }
+                      >
+                        {line}
+                      </div>
+                    )
+                  )}
                 </div>
               </section>
             </div>
@@ -737,11 +1003,47 @@ export default function ProductPage() {
                 <div className="text-[10px] uppercase tracking-widest text-white/60">
                   {t.modal.label}
                 </div>
+
                 <h3 className="mt-2 text-2xl font-semibold tracking-tight">
                   {t.modal.title}
                 </h3>
 
-                <p className="mt-2 text-sm text-white/75 leading-relaxed">
+                {/* Product selector (this is the whole point: never unknown) */}
+                <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-4">
+                  <div className="text-[10px] uppercase tracking-widest text-white/55">
+                    {t.modal.productLabel}
+                  </div>
+
+                  <div className="mt-3 flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedProduct("Stockfish 100g")}
+                      className={[
+                        "flex-1 rounded-lg border px-3 py-2 text-[11px] uppercase tracking-widest transition",
+                        selectedProduct === "Stockfish 100g"
+                          ? "border-white/30 bg-white text-black"
+                          : "border-white/15 bg-black/30 text-white/80 hover:border-white/25 hover:text-white",
+                      ].join(" ")}
+                    >
+                      Stockfish 100g
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setSelectedProduct("Field")}
+                      className={[
+                        "flex-1 rounded-lg border px-3 py-2 text-[11px] uppercase tracking-widest transition",
+                        selectedProduct === "Field"
+                          ? "border-white/30 bg-white text-black"
+                          : "border-white/15 bg-black/30 text-white/80 hover:border-white/25 hover:text-white",
+                      ].join(" ")}
+                    >
+                      Field
+                    </button>
+                  </div>
+                </div>
+
+                <p className="mt-4 text-sm text-white/75 leading-relaxed">
                   <span className="block">{t.modal.l1}</span>
                   <span className="block mt-2">{t.modal.scarcity1}</span>
                   <span className="block mt-2">{t.modal.scarcity2}</span>
@@ -792,6 +1094,7 @@ export default function ProductPage() {
 
                 <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-4 font-mono text-[11px] text-white/85">
                   <div>STATUS: WAITLIST</div>
+                  <div>PRODUCT: {selectedProduct}</div>
                   <div>ID: {allocationId}</div>
                 </div>
 
@@ -818,41 +1121,6 @@ export default function ProductPage() {
           </div>
         </div>
       )}
-
-      <BgToggle />
     </div>
   );
-}
-
-function BgToggle() {
-  useEffect(() => {
-    const bg = document.getElementById("bg-stockfish-hero2");
-    const hero = document.getElementById("hero");
-    if (!bg || !hero) return;
-
-    const onScroll = () => {
-      const rect = hero.getBoundingClientRect();
-      const trigger = Math.max(120, window.innerHeight * 0.25);
-      const show = rect.bottom <= trigger;
-
-      if (show) {
-        bg.classList.remove("opacity-0");
-        bg.classList.add("opacity-100");
-      } else {
-        bg.classList.remove("opacity-100");
-        bg.classList.add("opacity-0");
-      }
-    };
-
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, []);
-
-  return null;
 }
