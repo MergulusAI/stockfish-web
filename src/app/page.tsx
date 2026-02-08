@@ -109,6 +109,11 @@ const TEXT = {
         "Det räcker.",
       ],
       punchline: "Framtidens protein är 1 000 år gammalt.",
+      legalLine: "Bland världens mest proteinrika hela livsmedel.",
+      seo: {
+        h3a: "Naturlig proteinkälla utan tillsatser",
+        h3b: "Ursprung och tradition",
+      },
     },
 
     modal: {
@@ -209,6 +214,11 @@ const TEXT = {
         "That’s enough.",
       ],
       punchline: "The future of protein is 1,000 years old.",
+      legalLine: "Among the most protein-dense whole foods in the world.",
+      seo: {
+        h3a: "Natural protein without additives",
+        h3b: "Origin and tradition",
+      },
     },
 
     modal: {
@@ -558,7 +568,9 @@ export default function ProductPage() {
         <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <MiniIcelandGlobe size={20} />
-            <span className="font-semibold tracking-tight">{t.header.brand}</span>
+            <span className="font-semibold tracking-tight">
+              {t.header.brand}
+            </span>
             <span className="text-[11px] uppercase tracking-widest text-white/55">
               {t.header.tagline}
             </span>
@@ -601,7 +613,9 @@ export default function ProductPage() {
                 <div className="text-[10px] uppercase tracking-widest text-white/80">
                   {t.banner.title}
                 </div>
-                <div className="text-xs text-white/60 truncate">{t.banner.line}</div>
+                <div className="text-xs text-white/60 truncate">
+                  {t.banner.line}
+                </div>
               </div>
               <button
                 onClick={() => openWaitlist("Stockfish 100g")}
@@ -917,9 +931,13 @@ export default function ProductPage() {
 
             <div className="max-w-5xl mx-auto mt-10">
               <section className="rounded-2xl border border-white/10 bg-black/40 ring-1 ring-white/5 p-6 md:p-10 backdrop-blur-[2px]">
+                {/* H2 = primary section heading (SEO + structure) */}
                 <h2 className="text-sm uppercase tracking-widest text-white/85">
                   {t.sections.whyTitle}
                 </h2>
+
+                {/* SEO-only H3 anchors (no visual impact) */}
+                <h3 className="sr-only">{t.sections.seo.h3a}</h3>
 
                 <div className="mt-6 space-y-2 text-sm md:text-base font-medium text-white/88 leading-relaxed">
                   {t.sections.whyLines.map((line, idx) =>
@@ -929,7 +947,9 @@ export default function ProductPage() {
                       <div
                         key={idx}
                         className={
-                          idx === 0 || line === "Det räcker." || line === "That’s enough."
+                          idx === 0 ||
+                          line === "Det räcker." ||
+                          line === "That’s enough."
                             ? "text-white/95"
                             : ""
                         }
@@ -940,8 +960,16 @@ export default function ProductPage() {
                   )}
                 </div>
 
+                {/* Place second SEO anchor before origin/tradition part (kept invisible) */}
+                <h3 className="sr-only">{t.sections.seo.h3b}</h3>
+
+                {/* Legal calibration line (discreet, non-defensive) */}
+                <div className="mt-8 text-[11px] uppercase tracking-[0.28em] text-white/45">
+                  {t.sections.legalLine}
+                </div>
+
                 {/* punchline = small, discreet afterword */}
-                <div className="mt-8 text-[11px] uppercase tracking-[0.35em] text-white/40">
+                <div className="mt-4 text-[11px] uppercase tracking-[0.35em] text-white/40">
                   {t.sections.punchline}
                 </div>
 
