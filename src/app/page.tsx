@@ -109,7 +109,6 @@ const TEXT = {
         "Det räcker.",
       ],
       punchline: "Framtidens protein är 1 000 år gammalt.",
-      legalLine: "Bland världens mest proteinrika hela livsmedel.",
       seo: {
         h3a: "Naturlig proteinkälla utan tillsatser",
         h3b: "Ursprung och tradition",
@@ -214,7 +213,6 @@ const TEXT = {
         "That’s enough.",
       ],
       punchline: "The future of protein is 1,000 years old.",
-      legalLine: "Among the most protein-dense whole foods in the world.",
       seo: {
         h3a: "Natural protein without additives",
         h3b: "Origin and tradition",
@@ -672,7 +670,9 @@ export default function ProductPage() {
               {/* CTA #2: HERO primary */}
               <button
                 onClick={() =>
-                  isClosed ? openWaitlist("Stockfish 100g") : scrollToId("product")
+                  isClosed
+                    ? openWaitlist("Stockfish 100g")
+                    : scrollToId("product")
                 }
                 className={
                   isClosed
@@ -963,13 +963,8 @@ export default function ProductPage() {
                 {/* Place second SEO anchor before origin/tradition part (kept invisible) */}
                 <h3 className="sr-only">{t.sections.seo.h3b}</h3>
 
-                {/* Legal calibration line (discreet, non-defensive) */}
-                <div className="mt-8 text-[11px] uppercase tracking-[0.28em] text-white/45">
-                  {t.sections.legalLine}
-                </div>
-
                 {/* punchline = small, discreet afterword */}
-                <div className="mt-4 text-[11px] uppercase tracking-[0.35em] text-white/40">
+                <div className="mt-8 text-[11px] uppercase tracking-[0.35em] text-white/40">
                   {t.sections.punchline}
                 </div>
 
