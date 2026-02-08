@@ -590,10 +590,11 @@ export default function ProductPage() {
             </button>
           </nav>
 
-          <div className="w-[120px] hidden md:flex justify-end">
+          {/* Language toggle MUST be visible on mobile */}
+          <div className="w-auto flex justify-end">
             <button
               onClick={toggleLanguage}
-              className="text-[11px] uppercase tracking-widest text-white/65 hover:text-white transition"
+              className="text-[11px] uppercase tracking-widest text-white/65 hover:text-white transition px-2"
               aria-label="Toggle language"
               title="Toggle language"
             >
