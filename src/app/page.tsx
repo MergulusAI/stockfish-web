@@ -159,7 +159,7 @@ const TEXT = {
       strap: "RAW. ORGANIC. ARCTIC.",
       line1: "Air-dried Icelandic cod.",
       subline: "Shelf-stable at room temperature.",
-      line2: "≈84 g protein per 100 g.",
+      line2: "84 g protein per 100 g.",
       cta: "View products",
       closedLine: "Batch closed. Next opening announced by email.",
     },
