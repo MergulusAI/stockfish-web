@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# Local backups / editor artifacts
+*.bak
+*.bak*
+*.before-overwrite
+*.orig
+*.tmp
+
+# Scripts archive (keep local)
+scripts/_archive/

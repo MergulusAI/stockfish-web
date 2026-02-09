@@ -36,13 +36,13 @@ export default function CompanyPage() {
         <div className="mt-10 rounded-3xl border border-white/10 bg-white/[0.03] p-7">
           <div className="font-mono text-sm md:text-[15px] text-white/80 space-y-3">
             <div>Stockfish exists for a simple reason:</div>
-            <div>most protein products aren't food anymore.</div>
+            <div>most protein products aren&apos;t food anymore.</div>
             <div>This is food.</div>
             <div>Simple. Stable. Whole.</div>
 
             <div className="pt-6 text-white/55 space-y-3">
               <div>
-                We’re not building a brand experience. We’re building food.
+                We&apos;re not building a brand experience. We&apos;re building food.
               </div>
               <div>
                 Vacuum-sealed. Shelf-stable. Built for storage.

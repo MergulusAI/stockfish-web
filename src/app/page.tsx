@@ -51,7 +51,7 @@ const TEXT = {
     },
 
     hero: {
-      title: "Världens mest proteinrika näringskälla.",
+      title: "Världens mest proteinrika näringskälla",
       strap: "RAW. ORGANIC. ARCTIC.",
       line1: "84 g protein / 100 g.",
       line2: "Lufttorkad isländsk torsk.",
@@ -108,7 +108,7 @@ const TEXT = {
         "",
         "Det räcker.",
       ],
-      punchline: "Framtidens protein är 1 000 år gammalt.",
+      punchline: "Framtidens protein är 1 000 år gammalt",
       seo: {
         h3a: "Naturlig proteinkälla utan tillsatser",
         h3b: "Ursprung och tradition",
@@ -133,6 +133,13 @@ const TEXT = {
     },
 
     footer: "Batches only.",
+    contact: {
+      title: "Kontakt",
+      email: "info@stockfish.se",
+      location: "Verksamma från Varberg, Sverige",
+      origin: "Producerad på Island",
+    },
+
     errors: {
       submit: "Kunde inte skicka just nu. Försök igen.",
       network: "Nätverksfel. Försök igen om en stund.",
@@ -153,12 +160,11 @@ const TEXT = {
       cta: "Get batch notice",
     },
 
-    // LOCKED EN-HERO-COPY v1.0
     hero: {
-      title: "The world’s most protein-dense nutrition.",
+      title: "The world’s most protein-dense nutrition",
       strap: "RAW. ORGANIC. ARCTIC.",
       line1: "Air-dried Icelandic cod.",
-      subline: "Shelf-stable at room temperature.",
+      subline: "Stores at room temperature",
       line2: "84 g protein per 100 g.",
       cta: "View products",
       closedLine: "Batch closed. Next opening announced by email.",
@@ -171,7 +177,7 @@ const TEXT = {
         "Vacuum sealed. 100 g.",
         "84 g protein / 100 g.",
         "Ingredients: cod + sea salt.",
-        "Shelf-stable at room temperature.",
+        "Stores at room temperature.",
       ],
 
       fieldTitle: "Field Pouch",
@@ -180,7 +186,7 @@ const TEXT = {
         "84 g protein / 100 g.",
         "Calories: ~500 kcal.",
         "Prep: add boiling water directly into the pouch.",
-        "Shelf-stable at room temperature.",
+        "Stores at room temperature.",
       ],
 
       button: "Get batch notice",
@@ -213,7 +219,7 @@ const TEXT = {
         "",
         "That’s enough.",
       ],
-      punchline: "The future of protein is 1,000 years old.",
+      punchline: "The future of protein is 1,000 years old",
       seo: {
         h3a: "Natural protein without additives",
         h3b: "Origin and tradition",
@@ -238,6 +244,13 @@ const TEXT = {
     },
 
     footer: "Batches only.",
+    contact: {
+      title: "Contact",
+      email: "info@stockfish.se",
+      location: "Operating from Varberg, Sweden",
+      origin: "Made in Iceland",
+    },
+
     errors: {
       submit: "Could not submit right now. Please try again shortly.",
       network: "Network error. Please try again shortly.",
@@ -465,6 +478,9 @@ export default function ProductPage() {
   const isEN = pathname.startsWith("/en");
   const t = isEN ? TEXT.en : TEXT.sv;
 
+  // Typed hero helper (removes any)
+  type HeroCopy = (typeof TEXT)["sv"]["hero"] & { subline?: string };
+  const hero = t.hero as HeroCopy;
   // --------------------
   // BATCH STATE (DEFAULT = CLOSED)
   // --------------------
@@ -519,7 +535,7 @@ export default function ProductPage() {
 
       const data = await res.json().catch(() => ({}));
 
-      // Accept both { ok: true } and { success: true } (depending on your API implementation)
+      // Accept both { ok: true } and { success: true }
       const isSuccess = Boolean(data?.ok || data?.success);
 
       if (!res.ok || !isSuccess) {
@@ -567,9 +583,7 @@ export default function ProductPage() {
         <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <MiniIcelandGlobe size={20} />
-            <span className="font-semibold tracking-tight">
-              {t.header.brand}
-            </span>
+            <span className="font-semibold tracking-tight">{t.header.brand}</span>
             <span className="text-[11px] uppercase tracking-widest text-white/55">
               {t.header.tagline}
             </span>
@@ -613,9 +627,7 @@ export default function ProductPage() {
                 <div className="text-[10px] uppercase tracking-widest text-white/80">
                   {t.banner.title}
                 </div>
-                <div className="text-xs text-white/60 truncate">
-                  {t.banner.line}
-                </div>
+                <div className="text-xs text-white/60 truncate">{t.banner.line}</div>
               </div>
               <button
                 onClick={() => openWaitlist("Stockfish 100g")}
@@ -651,15 +663,13 @@ export default function ProductPage() {
               {t.hero.title}
             </h1>
 
-            <div className="mt-4 text-[11px] md:text-xs uppercase tracking-[0.35em] text-white/80">
+            <div className="mt-4 text-[11px] md:text-xs uppercase tracking-[0.22em] text-white/80">
               {t.hero.strap}
             </div>
 
             <div className="mt-6 space-y-2 text-base md:text-lg font-medium tracking-wide text-white/95">
               <div>{t.hero.line1}</div>
-              {"subline" in t.hero && (t.hero as any).subline ? (
-                <div>{(t.hero as any).subline}</div>
-              ) : null}
+              {hero.subline ? <div>{hero.subline}</div> : null}
               <div className="text-white/90 font-normal">{t.hero.line2}</div>
               {isClosed ? (
                 <div className="pt-2 text-sm md:text-base text-white/65 font-normal">
@@ -669,12 +679,9 @@ export default function ProductPage() {
             </div>
 
             <div className="mt-8 flex flex-col items-center gap-3">
-              {/* CTA #2: HERO primary */}
               <button
                 onClick={() =>
-                  isClosed
-                    ? openWaitlist("Stockfish 100g")
-                    : scrollToId("product")
+                  isClosed ? openWaitlist("Stockfish 100g") : scrollToId("product")
                 }
                 className={
                   isClosed
@@ -686,7 +693,7 @@ export default function ProductPage() {
               </button>
 
               {isClosed ? (
-                <div className="text-[10px] uppercase tracking-[0.35em] text-white/45">
+                <div className="text-[10px] uppercase tracking-[0.22em] text-white/45">
                   {t.footer}
                 </div>
               ) : null}
@@ -738,7 +745,6 @@ export default function ProductPage() {
                     {t.cards.stockfishDesc}
                   </div>
 
-                  {/* Bundles ONLY when OPEN */}
                   {isOpen ? (
                     <div className="mt-5 space-y-2">
                       {STOCKFISH_BUNDLES.map((b) => {
@@ -787,7 +793,6 @@ export default function ProductPage() {
                   ) : null}
 
                   <div className="mt-5">
-                    {/* When CLOSED: product-specific waitlist CTA */}
                     {isClosed ? (
                       <button
                         onClick={() => openWaitlist("Stockfish 100g")}
@@ -834,7 +839,6 @@ export default function ProductPage() {
                     {t.cards.fieldDesc}
                   </div>
 
-                  {/* Bundles ONLY when OPEN */}
                   {isOpen ? (
                     <div className="mt-5 space-y-2">
                       {FIELD_BUNDLES.map((b) => {
@@ -883,7 +887,6 @@ export default function ProductPage() {
                   ) : null}
 
                   <div className="mt-5">
-                    {/* When CLOSED: product-specific waitlist CTA */}
                     {isClosed ? (
                       <button
                         onClick={() => openWaitlist("Field")}
@@ -923,12 +926,10 @@ export default function ProductPage() {
 
             <div className="max-w-5xl mx-auto mt-10">
               <section className="rounded-2xl border border-white/10 bg-black/40 ring-1 ring-white/5 p-6 md:p-10 backdrop-blur-[2px]">
-                {/* H2 = primary section heading (SEO + structure) */}
                 <h2 className="text-sm uppercase tracking-widest text-white/85">
                   {t.sections.whyTitle}
                 </h2>
 
-                {/* SEO-only H3 anchors (no visual impact) */}
                 <h3 className="sr-only">{t.sections.seo.h3a}</h3>
 
                 <div className="mt-6 space-y-2 text-sm md:text-base font-medium text-white/88 leading-relaxed">
@@ -952,15 +953,12 @@ export default function ProductPage() {
                   )}
                 </div>
 
-                {/* Place second SEO anchor before origin/tradition part (kept invisible) */}
                 <h3 className="sr-only">{t.sections.seo.h3b}</h3>
 
-                {/* punchline = small, discreet afterword */}
-                <div className="mt-8 text-[11px] uppercase tracking-[0.35em] text-white/40">
+                <div className="mt-8 text-[11px] uppercase tracking-[0.22em] text-white/40">
                   {t.sections.punchline}
                 </div>
 
-                {/* CTA (subtle, single) */}
                 {isClosed ? (
                   <div className="mt-10 flex justify-center">
                     <PrimaryBatchCTA
@@ -975,9 +973,26 @@ export default function ProductPage() {
           </div>
         </section>
 
+        {/* FOOTER (left = Batches only., right = Contact) */}
         <footer className="border-t border-white/10 py-10">
-          <div className="max-w-7xl mx-auto px-6 text-[10px] uppercase tracking-[0.35em] text-white/35">
-            {t.footer}
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div className="text-[10px] uppercase tracking-[0.22em] text-white/35">
+                {t.footer}
+              </div>
+
+              <div className="text-[10px] uppercase tracking-[0.22em] text-white/35 md:text-right">
+                <div className="text-white/40">{t.contact.title}</div>
+                <a
+                  href={`mailto:${t.contact.email}`}
+                  className="inline-block mt-1 text-white/55 hover:text-white transition"
+                >
+                  {t.contact.email}
+                </a>
+                <div className="mt-1">{t.contact.location}</div>
+                <div>{t.contact.origin}</div>
+              </div>
+            </div>
           </div>
         </footer>
       </main>
@@ -1011,7 +1026,6 @@ export default function ProductPage() {
                   {t.modal.title}
                 </h3>
 
-                {/* Product selector (this is the whole point: never unknown) */}
                 <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-4">
                   <div className="text-[10px] uppercase tracking-widest text-white/55">
                     {t.modal.productLabel}
