@@ -478,9 +478,6 @@ export default function ProductPage() {
   const isEN = pathname.startsWith("/en");
   const t = isEN ? TEXT.en : TEXT.sv;
 
-  // Typed hero helper (removes any)
-  type HeroCopy = (typeof TEXT)["sv"]["hero"] & { subline?: string };
-  const hero = t.hero as HeroCopy;
   // --------------------
   // BATCH STATE (DEFAULT = CLOSED)
   // --------------------
@@ -669,7 +666,9 @@ export default function ProductPage() {
 
             <div className="mt-6 space-y-2 text-base md:text-lg font-medium tracking-wide text-white/95">
               <div>{t.hero.line1}</div>
-              {hero.subline ? <div>{hero.subline}</div> : null}
+              {"subline" in t.hero && (t.hero as any).subline ? (
+                <div>{(t.hero as any).subline}</div>
+              ) : null}
               <div className="text-white/90 font-normal">{t.hero.line2}</div>
               {isClosed ? (
                 <div className="pt-2 text-sm md:text-base text-white/65 font-normal">
@@ -726,13 +725,35 @@ export default function ProductPage() {
             <div className="mt-10 grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
               {/* Stockfish Pack 100g */}
               <div className="group rounded-2xl border border-white/10 bg-black/40 ring-1 ring-white/5 overflow-hidden backdrop-blur-[2px]">
-                <div className="relative aspect-[4/5] bg-black/30">
+                <div className="relative aspect-[2/3] bg-black/30 overflow-hidden">
+                  {/* Spotlight (subtle) */}
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                      background:
+                        "radial-gradient(ellipse at 50% 38%, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.08) 22%, rgba(255,255,255,0.03) 42%, rgba(0,0,0,0) 70%)",
+                      mixBlendMode: "screen",
+                      opacity: 0.75,
+                    }}
+                  />
+                  {/* Soft vignette to keep edges premium */}
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                      background:
+                        "radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.35) 100%)",
+                      opacity: 0.55,
+                    }}
+                  />
+
                   <Image
                     src="/fish/tactical-snack.png"
                     alt="Stockfish Pack 100g pouch"
                     fill
                     sizes="(min-width: 768px) 50vw, 100vw"
-                    className="object-contain p-6 transition-transform duration-300 ease-out group-hover:scale-[1.04]"
+                    className="object-contain p-0 translate-y-1 md:translate-y-2 scale-[1.50] md:scale-[1.60] transition-transform duration-300 ease-out group-hover:scale-[1.64]"
                   />
                 </div>
 
@@ -820,13 +841,35 @@ export default function ProductPage() {
 
               {/* Field */}
               <div className="group rounded-2xl border border-white/10 bg-black/40 ring-1 ring-white/5 overflow-hidden backdrop-blur-[2px]">
-                <div className="relative aspect-[4/5] bg-black/30">
+                <div className="relative aspect-[2/3] bg-black/30 overflow-hidden">
+                  {/* Spotlight (subtle) */}
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                      background:
+                        "radial-gradient(ellipse at 50% 38%, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.08) 22%, rgba(255,255,255,0.03) 42%, rgba(0,0,0,0) 70%)",
+                      mixBlendMode: "screen",
+                      opacity: 0.75,
+                    }}
+                  />
+                  {/* Soft vignette to keep edges premium */}
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                      background:
+                        "radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.35) 100%)",
+                      opacity: 0.55,
+                    }}
+                  />
+
                   <Image
                     src="/fish/field.png"
                     alt="Stockfish Field pouch"
                     fill
                     sizes="(min-width: 768px) 50vw, 100vw"
-                    className="object-contain p-6 transition-transform duration-300 ease-out group-hover:scale-[1.04]"
+                    className="object-contain p-0 translate-y-1 md:translate-y-2 scale-[1.50] md:scale-[1.60] transition-transform duration-300 ease-out group-hover:scale-[1.64]"
                   />
                 </div>
 
@@ -912,8 +955,6 @@ export default function ProductPage() {
                 </div>
               </div>
             </div>
-
-            {/* Removed extra CTA under cards (CTA hygiene) */}
           </div>
         </section>
 
@@ -973,7 +1014,7 @@ export default function ProductPage() {
           </div>
         </section>
 
-        {/* FOOTER (left = Batches only., right = Contact) */}
+        {/* FOOTER */}
         <footer className="border-t border-white/10 py-10">
           <div className="max-w-7xl mx-auto px-6">
             <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
